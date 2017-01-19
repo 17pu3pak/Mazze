@@ -19,6 +19,7 @@
 #define white  "\x1B[37m"
 #define reset  "\033[0m"
 
+
 int ind(int j, int i, int sizze) {
         if ((i < 0) ||( j < 0) ||( i > sizze-1 )||( j > sizze-1)) {
                 return -1;
@@ -113,35 +114,19 @@ void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
         return;
 }
 
-void Load(Cell *array, int *sizze,int *diff,int *ext_timmer){
-        char PathName[100];
+void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
         // Переменная, в которую буднт помещен указатель на PathName
-        char PN;
-        int result;
 
         // Определяем путь к текущей директории
-        PN = *getwd (PathName);
         FILE * fo;
 
-        char name[100];
         int tmp;
-        system("clear");
-        printf ("Enter name of a save file: ");
-        scanf("%s",name);
-        strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
+
         fo = fopen(PathName,"rt");
         fscanf( fo, "%d\n",&tmp );
-        *sizze=tmp;
         int sqr=tmp*tmp;
+        printf ("tmp%d\n",tmp);
 
-
-        printf ("%d\n",tmp);
-
-        if (!(array=realloc(array,sqr*sizeof(Cell)))) {
-                printf("Malloc error 1\n");
-                exit(1);
-        }
-        result=CreateCell(array,tmp);
         sqr=tmp*tmp;
         printf("%d\n",sqr );
 
@@ -149,13 +134,14 @@ void Load(Cell *array, int *sizze,int *diff,int *ext_timmer){
                 fscanf( fo, "%d\n", &tmp);
                 printf("%d\n",tmp );
                 array[i].i=tmp;
+                printf("I %d\n",array[i].i);
                 fscanf( fo, "%d\n", &tmp);
                 printf("%d\n",tmp );
                 array[i].j=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("from file -> %d\n",tmp );
+                printf("%d\n",tmp );
                 array[i].index=tmp;
-                printf("in array -> %d\n",array[i].index);
+                printf("IND %d\n",array[i].index);
                 fscanf( fo, "%d\n", &tmp);
                 printf("%d\n",tmp );
                 array[i].top=tmp;
@@ -184,11 +170,27 @@ void Load(Cell *array, int *sizze,int *diff,int *ext_timmer){
                 printf("%d\n",tmp );
                 array[i].wall=tmp;
         }
+
         fscanf( fo, "%d\n", &tmp);
         *diff=tmp;
         fscanf( fo, "%d\n", &tmp);
         *ext_timmer=tmp;
         fclose(fo);
         system("clear");
+        return;
+}
+void Load2(int *sizze, char PathName[100]){
+
+  // Переменная, в которую буднт помещен указатель на PathName
+
+  // Определяем путь к текущей директории
+  FILE * fo;
+
+  int tmp;
+
+        fo = fopen(PathName,"rt");
+        fscanf( fo, "%d\n",&tmp );
+        *sizze=tmp;
+        
         return;
 }
