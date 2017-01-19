@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <termios.h>
+#include <unistd.h>
 #include <time.h>
+#include <ctype.h>
 //#include <conio.h>
 #include "library.h"
 
@@ -18,7 +21,7 @@
 
 
 int main(){
-  Cell *array;
+        Cell *array;
         int sizze,result;
         int stack_size=0;
         int diff,strt;
@@ -35,7 +38,6 @@ start:
         current=malloc(sizeof(Cell));
         end_cell=malloc(sizeof(Cell));
 
-
         system("clear");
         printf(cyan "P.K.B. Team © 2016\n");
         printf(reset);
@@ -45,20 +47,28 @@ start:
         printf (green "2) Load\n");
         scanf ("%d",&strt);
         if (strt == 2) {
-              int  tmp = 2;
-              if (!(array=malloc(4*sizeof(Cell)))) {
-                      printf("Malloc error 1\n");
-                      exit(1);
-              }
-                Load(array, &sizze, &diff, &ext_timmer);
-                printf ("sizze=%d\n",sizze);
-                printf ("diff=%d\n",diff);
-                printf ("ext_timmer=%d\n",ext_timmer);
-                 tmp=sizze*sizze;
-                printf("sizze%d\n",tmp );
-                                            //FIXME: в array возвращаются неправельные значения
+          char PathName[100];
+          // Переменная, в которую буднт помещен указатель на PathName
+          char PN;
+
+          // Определяем путь к текущей директории
+          PN = *getwd (PathName);
+          char name[100];
+          system("clear");
+                printf ("Enter name of a save file: ");
+                scanf("%s",name);
+                strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
+
+                Load2( &sizze,PathName);
+                printf("NAME %s\n",PathName);
+
+
+          array=malloc(sizze*sizze*sizeof(Cell));
+          Debugger(1);
+                Load(array, &diff, &ext_timmer,PathName);
+                Debugger(2);
+                int tmp=sizze*sizze;
                 for (int i=0; i<tmp; i++) {
-                  printf ("ind%d\n",array[i].index);
                         if (array[i].ply==1) {
                                 current=&array[i];
                         }
@@ -66,12 +76,10 @@ start:
                                 end_cell=&array[i];
                         }
 
-                        printf("I = %d\n",i );
-                        printf("cur%d\n",current->index );
-                        printf("end%d\n",end_cell->index );
                 }
                 Debugger(100);
                 timmer =clock();
+                system("clear");
                 Update(array,current,end_cell,sizze,diff,timmer,ext_timmer);
         }
         if ((strt < 1) || (strt > 2)) {
