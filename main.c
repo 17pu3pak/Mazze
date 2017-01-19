@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <time.h>
 #include <ctype.h>
-//#include <conio.h>
 #include "library.h"
 
 #define nc  "\x1B[0m"
@@ -23,7 +22,7 @@
 int main(){
         Cell *array;
         int sizze,result;
-        int stack_size=0;
+      //  int stack_size=0;
         int diff,strt;
         int start_point_x;
         int start_point_y;
@@ -48,7 +47,7 @@ start:
         scanf ("%d",&strt);
         if (strt == 2) {
           char PathName[100];
-          // Переменная, в которую буднт помещен указатель на PathName
+          // Переменная, в которую будет помещен указатель на PathName
           char PN;
 
           // Определяем путь к текущей директории

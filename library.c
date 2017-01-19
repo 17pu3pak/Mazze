@@ -75,7 +75,7 @@ void Prt_time_spd(int timmer, int ext_timmer){
 
 void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
         char PathName[100];
-        // Переменная, в которую буднт помещен указатель на PathName
+        // Переменная, в которую будет помещен указатель на PathName
         char PN;
 
         // Определяем путь к текущей директории
@@ -115,7 +115,7 @@ void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
 }
 
 void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
-        // Переменная, в которую буднт помещен указатель на PathName
+        // Переменная, в которую будет помещен указатель на PathName
 
         // Определяем путь к текущей директории
         FILE * fo;
@@ -181,7 +181,7 @@ void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
 }
 void Load2(int *sizze, char PathName[100]){
 
-  // Переменная, в которую буднт помещен указатель на PathName
+  // Переменная, в которую будет помещен указатель на PathName
 
   // Определяем путь к текущей директории
   FILE * fo;
@@ -191,6 +191,6 @@ void Load2(int *sizze, char PathName[100]){
         fo = fopen(PathName,"rt");
         fscanf( fo, "%d\n",&tmp );
         *sizze=tmp;
-        
+
         return;
 }
