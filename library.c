@@ -179,7 +179,7 @@ void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
         system("clear");
         return;
 }
-void Load2(int *sizze, char PathName[100]){
+void LoadSize(int *sizze, char PathName[100]){
 
   // Переменная, в которую будет помещен указатель на PathName
 

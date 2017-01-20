@@ -22,7 +22,6 @@
 int main(){
         Cell *array;
         int sizze,result;
-        //  int stack_size=0;
         int diff,strt;
         int start_point_x;
         int start_point_y;
@@ -55,6 +54,7 @@ start:
                 PN = *getwd (PathName);
                 char name[100];
                 system("clear");
+                system("ls saves");
                 printf ("Enter name of a save file: ");
                 scanf("%s",name);
                 strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
@@ -66,7 +66,7 @@ start:
                 else{
                   fclose(tempf);
                 }
-                Load2( &sizze,PathName);
+                LoadSize( &sizze,PathName);
                 printf("NAME %s\n",PathName);
 
 

@@ -15,10 +15,18 @@
 #define cyan  "\x1B[36m"
 #define white  "\x1B[37m"
 #define reset  "\033[0m"
-
-//Отрисовыванеи лаберинта
+int counter = 0;
+//Отрисовывание лабиринта
 void Draw(Cell *array,int sizze){
         SetCursor(0,0);
+        if(counter ==10){
+          //периодическая очистка экрана
+          system("clear");
+          counter = 0;
+        }
+        else{
+          counter++;
+        }
         printf(cyan "P.K.B. Team © 2016\n");
         printf(green "Maze size: %d\n",sizze );
         printf(reset);
@@ -38,7 +46,7 @@ void Draw(Cell *array,int sizze){
         // rows
         for (int j=0; j<sizze; j++) {
                 printf ("%3d ",j+1);
-                // left/right wals
+                // left/right walls
                 printf("|");
                 for (int i=0; i<sizze; i++) {
 
@@ -63,7 +71,7 @@ void Draw(Cell *array,int sizze){
                 }
                 printf("\n");
                 printf("    +");
-                // top/bottom wlas
+                // top/bottom walls
                 for (int i=0; i<sizze; i++) {
                         int index=ind(j,i,sizze);
                         if (array[index].bottom != 0) {
@@ -80,7 +88,7 @@ void Draw(Cell *array,int sizze){
 
 }
 
-//Отрисовыванеи лаберинта
+//Отрисовывание лабиринта
 void Draw2(Cell *array,int sizze, Cell *current){
         SetCursor(0,0);
         Cell *drw=malloc(9*sizeof(int));

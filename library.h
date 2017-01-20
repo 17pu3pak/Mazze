@@ -24,7 +24,7 @@ void Update(Cell *array, Cell *current, Cell *end_cell, int sizze,int diff, int 
 //работа с файлами
 void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer);
 void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]);
-void Load2(int *sizze,char PathName[100]);
+void LoadSize(int *sizze,char PathName[100]);
 //отладка
 void Debugger (int i);
 //string функции
