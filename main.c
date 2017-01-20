@@ -65,7 +65,6 @@ start:
                   }
                 else{
                   fclose(tempf);
-                  printf("Nice!\n");
                 }
                 Load2( &sizze,PathName);
                 printf("NAME %s\n",PathName);
