@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <ctype.h>
+//#include <conio.h>
 #include "library.h"
 
 #define nc  "\x1B[0m"
@@ -17,12 +18,14 @@
 #define white  "\x1B[37m"
 #define reset  "\033[0m"
 
-
-
+//TODO: проврека на обновления
+//TODO: git
+//TODO: ls в загрузке DONE
+//TODO: проверка файлов
 int main(){
         Cell *array;
         int sizze,result;
-        //  int stack_size=0;
+        int stack_size=0;
         int diff,strt;
         int start_point_x;
         int start_point_y;
@@ -45,36 +48,125 @@ start:
         printf (green "1) New game\n");
         printf (green "2) Load\n");
         scanf ("%d",&strt);
+
+        //загрузка
         if (strt == 2) {
+                system("clear");
                 char PathName[100];
-                // Переменная, в которую будет помещен указатель на PathName
+                char Path[100];
+                char Path2[100];
                 char PN;
-                FILE *tempf;
+                char lss[1000]="ls '";
+                char rmm[100]="rm '";
 
                 // Определяем путь к текущей директории
                 PN = *getwd (PathName);
-                char name[100];
-                system("clear");
-                printf ("Enter name of a save file: ");
-                scanf("%s",name);
-                strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
-                if(!(tempf = fopen(PathName, "r"))) {
-                  printf("Error while reading file!\n");
-                  sleep(1);
-                  goto start;
-                  }
-                else{
-                  fclose(tempf);
+                PN = *getwd (Path);
+                PN = *getwd (Path2);
+                //удалаяем файл a.txt
+                strcat(Path2,"/saves/a.txt'");
+                strcat(rmm,Path2);
+                system(rmm);
+                strcat(lss,strcat(Path,"/saves' >> '"));
+                strcat(lss,Path2);
+                //делаем ls что бы узнать какие у нас есть сохраниея
+                system(lss);
+                PN = *getwd (Path2);
+                strcat(Path2,"/saves/a.txt");
+
+                FILE * fo;
+
+                fo = fopen(Path2,"rt");
+
+                //Массив указателей на слова
+                char **words;
+                //Строка, которая используется для считывания введённого пользователем слова
+                char buffer[100];
+                //Счётчик слов
+                int wordCounter = 0;
+                //Длина введённого слова
+                int length;
+                int size = 1;
+                int i,sz,p;
+
+                //Выделяем память под массив из size указателей
+                if( !( words = (char**) malloc(size*sizeof(char*)))) {
+                        //Проверяем на наличие ошибок
+                        printf("Error: can't allocate memory");
+                        exit(1);
                 }
+                //получаем список сохранений
+                while (fscanf(fo, "%s", buffer) == 1) { // expect 1 successful conversion
+                        length = stringlength(buffer);
+
+                        //Определяем длину слова
+                        //В том случае, если введено слов больше, чем длина массива, то
+                        //увеличиваем массив слов
+                        if (wordCounter >= size) {
+                                size++;
+                                if  (!(words = (char**) realloc(words, size*sizeof(char*)))) {
+                                        printf("Error: can't reallocate memory");
+                                        exit(2);
+                                }
+                        }
+                        //Выделяем память непосредственно под слово
+                        //на 1 байт больше, так как необходимо хранить терминальный символ
+                        if (!(words[wordCounter] = (char*) malloc((length + 1)*sizeof(char)))) {
+                                //Проверяем на наличие ошибок
+                                printf("Error: can't allocate memory");
+                                exit(3);
+                        }
+                        //Копируем слово из буфера по адресу, который
+                        //хранится в массиве указателей на слова
+                        p=0;
+                        while(p<=length) {
+                                words[wordCounter][p]=buffer[p];
+                                p++;
+                        }
+                        wordCounter++;
+                }
+                //sz=sizze(wordCounter);
+                //удаяем лишние файлы и расширения сохранений
+                for (int i=0; i<wordCounter; i++) {
+                        int length = stringlength(words[i]);
+                        if (length > 4) {
+                                if ((words[i][length-4] == '.') && (words[i][length-3] == 'p') && (words[i][length-2] == 'k') && (words[i][length-1] == 'b')) {
+                                        words[i][length-4]='\0';
+                                }
+                                else{
+                                        words[i][0]='\0';
+                                }
+                        }
+                        else{
+                                words[i][0]='\0';
+                        }
+                }
+                //предлагаем выбрать сохранения
+                printf ("Chouse name of a save file: \n");
+                int *ids;
+                int numbr=1;
+                for (i = 0; i < wordCounter; i++) {
+                        if (stringlength(words[i]) != 0) {
+                                ids=(int*)realloc(ids, numbr*sizeof(int));
+                                ids[numbr-1]=i;
+                                printf ("%d) %s\n",numbr,words[i]);
+                                numbr++;
+                        }
+                }
+                //выбираем сохранение
+                printf (":");
+                int get;
+                scanf("%d",&get);
+                //получаме размера лаберинта из файла
+                strcat(strcat(strcat(PathName,"/saves/"),words[ids[get-1]]),".pkb");
                 Load2( &sizze,PathName);
                 printf("NAME %s\n",PathName);
-
-
+                //выделяем память под лаберинт
                 array=malloc(sizze*sizze*sizeof(Cell));
-                Debugger(1);
+                //загружаем лаберинт
                 Load(array, &diff, &ext_timmer,PathName);
-                Debugger(2);
                 int tmp=sizze*sizze;
+                //находим точку начала и конца
                 for (int i=0; i<tmp; i++) {
                         if (array[i].ply==1) {
                                 current=&array[i];
@@ -82,11 +174,10 @@ start:
                         if (array[i].endd==1) {
                                 end_cell=&array[i];
                         }
-
                 }
-                Debugger(100);
                 timmer =clock();
                 system("clear");
+                //играем)))
                 Update(array,current,end_cell,sizze,diff,timmer,ext_timmer);
         }
         if ((strt < 1) || (strt > 2)) {

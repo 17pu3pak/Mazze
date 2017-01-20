@@ -29,7 +29,7 @@ int CreateCell(Cell *array,int sizze){
         return 0;
 }
 
-//поиск соседей текущей ячейки (генерация лабиринта)
+//поиск соседей текущей ячейки (генерация лаберинат)
 int FindNeighbors(int *neighbors_ids, int sizze, Cell *array,  int *start_point_x  , int *start_point_y  , int *end_point_x  , int *end_point_y){
         srand(time(NULL));
         int stack_size=0;
@@ -60,7 +60,7 @@ find:   ;
                 return 0;
 
         }
-        // отмечаем, что мы уже были в текущей ячейке
+        // отмечаме что мы уже были в текущей ячейке
         current->visited=1;
         int empty=1;
         // найдем адреса всех соседних не посещенных ячеек (если нет соседа с какой либо стороны, то -1)
@@ -88,7 +88,7 @@ find:   ;
         else{
                 neighbors_ids[3]=-1;
         }
-        // проверим, что мы нашли хотя бы одного соседа
+        // проверим, что мы нашли хотябы одного соседа
         int i;
         for (i=0; i<4; i++) {
                 if (neighbors_ids[i] != -1) {
@@ -104,10 +104,10 @@ find:   ;
                         int rnd=rand()%4;
                         next=neighbors_ids[rnd];
                 }
-                // посмотрим, где он располагается относительно нас
+                // посмотрим, где он распологается отностительно нас
                 int b=current->j-array[next].j;
                 int a=current->i-array[next].i;
-                // удалим границу между нами и соседом
+                // удялим границу между нами и соседом
                 if (a == -1) {
                         array[current->index].right=0;
                         array[next].left=0;
@@ -127,7 +127,7 @@ find:   ;
                 array[next].visited=1;
                 // переходим в выбраную соседнюю ячейку
                 current=&array[next];
-                // записываем эту ячейку в стек
+                // записываме эту ячейку в стек
                 push(st,&current->index);
                 stack_size++;
                 goto find;

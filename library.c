@@ -44,17 +44,17 @@ void SetCursor(int X,int Y){
         printf("\033[%d;%dH",Y,X);
 }
 void Pauza(){
-  printf("\n");
-  printf("Press 'ENTER' to continue\n");
-  unsigned char inp = mygetch();
-  inp = tolower(inp);
-  switch(inp) {
+        printf("\n");
+        printf("Press 'ENTER' to continue\n");
+        unsigned char inp = mygetch();
+        inp = tolower(inp);
+        switch(inp) {
 
-  case 10: {
+        case 10: {
 
-          }
-          break;
-  }
+        }
+        break;
+        }
 }
 
 void Prt_time_spd(int timmer, int ext_timmer){
@@ -75,7 +75,7 @@ void Prt_time_spd(int timmer, int ext_timmer){
 
 void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
         char PathName[100];
-        // Переменная, в которую будет помещен указатель на PathName
+        // Переменная, в которую буднт помещен указатель на PathName
         char PN;
 
         // Определяем путь к текущей директории
@@ -115,7 +115,7 @@ void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
 }
 
 void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
-        // Переменная, в которую будет помещен указатель на PathName
+        // Переменная, в которую буднт помещен указатель на PathName
 
         // Определяем путь к текущей директории
         FILE * fo;
@@ -132,42 +132,28 @@ void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
 
         for (int i=0; i<sqr; i++) {
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].i=tmp;
-                printf("I %d\n",array[i].i);
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].j=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].index=tmp;
-                printf("IND %d\n",array[i].index);
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].top=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].right=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].bottom=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].left=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].visited=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].empty=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].ply=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].endd=tmp;
                 fscanf( fo, "%d\n", &tmp);
-                printf("%d\n",tmp );
                 array[i].wall=tmp;
         }
 
@@ -181,12 +167,12 @@ void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
 }
 void Load2(int *sizze, char PathName[100]){
 
-  // Переменная, в которую будет помещен указатель на PathName
+        // Переменная, в которую буднт помещен указатель на PathName
 
-  // Определяем путь к текущей директории
-  FILE * fo;
+        // Определяем путь к текущей директории
+        FILE * fo;
 
-  int tmp;
+        int tmp;
 
         fo = fopen(PathName,"rt");
         fscanf( fo, "%d\n",&tmp );
