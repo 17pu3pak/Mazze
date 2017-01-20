@@ -22,7 +22,7 @@
 int main(){
         Cell *array;
         int sizze,result;
-      //  int stack_size=0;
+        //  int stack_size=0;
         int diff,strt;
         int start_point_x;
         int start_point_y;
@@ -46,24 +46,32 @@ start:
         printf (green "2) Load\n");
         scanf ("%d",&strt);
         if (strt == 2) {
-          char PathName[100];
-          // Переменная, в которую будет помещен указатель на PathName
-          char PN;
+                char PathName[100];
+                // Переменная, в которую будет помещен указатель на PathName
+                char PN;
+                FILE *tempf;
 
-          // Определяем путь к текущей директории
-          PN = *getwd (PathName);
-          char name[100];
-          system("clear");
+                // Определяем путь к текущей директории
+                PN = *getwd (PathName);
+                char name[100];
+                system("clear");
                 printf ("Enter name of a save file: ");
                 scanf("%s",name);
                 strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
-
+                if(!(tempf = fopen(PathName, "r"))) {
+                  printf("Error while reading file!\n");
+                  sleep(1);
+                  goto start;
+                  }
+                else{
+                  fclose(tempf);
+                }
                 Load2( &sizze,PathName);
                 printf("NAME %s\n",PathName);
 
 
-          array=malloc(sizze*sizze*sizeof(Cell));
-          Debugger(1);
+                array=malloc(sizze*sizze*sizeof(Cell));
+                Debugger(1);
                 Load(array, &diff, &ext_timmer,PathName);
                 Debugger(2);
                 int tmp=sizze*sizze;
