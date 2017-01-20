@@ -21,7 +21,7 @@
 //TODO: проврека на обновления
 //TODO: git
 //TODO: ls в загрузке DONE
-//TODO: проверка файлов
+//TODO: проверка файлов DONE
 int main(){
         Cell *array;
         int sizze,result;
@@ -47,6 +47,7 @@ start:
         printf (green "Select:\n");
         printf (green "1) New game\n");
         printf (green "2) Load\n");
+        printf(reset);
         scanf ("%d",&strt);
 
         //загрузка
@@ -142,7 +143,7 @@ start:
                         }
                 }
                 //предлагаем выбрать сохранения
-                printf ("Chouse name of a save file: \n");
+                printf ("Choose name of a save file: \n");
                 int *ids;
                 int numbr=1;
                 for (i = 0; i < wordCounter; i++) {

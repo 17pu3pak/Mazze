@@ -75,11 +75,13 @@ void Prt_time_spd(int timmer, int ext_timmer){
 
 void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
         char PathName[100];
+        char PathName2[100];
         // Переменная, в которую буднт помещен указатель на PathName
         char PN;
 
         // Определяем путь к текущей директории
         PN = *getwd (PathName);
+        PN = *getwd (PathName2);
         FILE * fo;
 
         char name[100];
@@ -87,6 +89,25 @@ void Save(Cell *array, int sizze,int diff,int timmer,int ext_timmer){
         printf ("Enter name for a save file: ");
         scanf("%s",name);
         strcat(strcat(strcat(PathName,"/saves/"),name),".pkb");
+        if ((fo = fopen(PathName, "r")) != NULL){
+          fclose(fo);
+          printf ("File with this name already exist. Rewrite?\n");
+          printf ("1) Yes\n");
+          printf ("2) No\n");
+          int c;
+          scanf("%d", &c);
+          if (c == 1){
+            char rm[100]="rm '";
+            strcat(rm,strcat(PathName2,"'"));
+            system(rm);
+          }
+          else{
+            printf("Save canceled.\n");
+            sleep(1);
+            system("clear");
+            return;
+          }
+        }
         fo = fopen(PathName,"wt");
         fprintf( fo, "%d\n",sizze );
         for (int i=0; i<sizze*sizze; i++) {
@@ -174,7 +195,13 @@ void Load2(int *sizze, char PathName[100]){
 
         int tmp;
 
-        fo = fopen(PathName,"rt");
+        //fo = fopen(PathName,"rt");
+        if ((fo = fopen(PathName, "r")) == NULL){
+          printf("File does'n exist\n");
+          sleep(1);
+          main();
+        }
+
         fscanf( fo, "%d\n",&tmp );
         *sizze=tmp;
 
