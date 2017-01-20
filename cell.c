@@ -56,7 +56,6 @@ find:   ;
         }
         if (stack_size==0) {
           array[ind(*end_point_y, *end_point_x, sizze)].endd=1;
-          printf ("ENDCELL%d\n",ind(*end_point_y, *end_point_x, sizze));
                 return 0;
 
         }
@@ -141,6 +140,5 @@ find:   ;
                 goto find;
         }
         array[ind(*end_point_y, *end_point_x, sizze)].endd=1;
-        printf ("ENDCELL%d\n",ind(*end_point_y, *end_point_x, sizze));
         return 0;
 }

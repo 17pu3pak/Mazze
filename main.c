@@ -50,6 +50,12 @@ start:
         printf(reset);
         scanf ("%d",&strt);
 
+        if ((strt < 1) || (strt > 2)) {
+                printf("Input error.\n");
+                sleep(1);
+                goto start;
+        }
+
         //загрузка
         if (strt == 2) {
                 system("clear");
@@ -161,7 +167,6 @@ start:
                 //получаме размера лаберинта из файла
                 strcat(strcat(strcat(PathName,"/saves/"),words[ids[get-1]]),".pkb");
                 Load2( &sizze,PathName);
-                printf("NAME %s\n",PathName);
                 //выделяем память под лаберинт
                 array=malloc(sizze*sizze*sizeof(Cell));
                 //загружаем лаберинт
@@ -181,11 +186,7 @@ start:
                 //играем)))
                 Update(array,current,end_cell,sizze,diff,timmer,ext_timmer);
         }
-        if ((strt < 1) || (strt > 2)) {
-                printf("Error.\n");
-                sleep(1);
-                goto start;
-        }
+
 err1:
         system("clear");
         printf(cyan "P.K.B. Team © 2016\n");
@@ -198,20 +199,30 @@ err1:
         scanf ("%d",&diff);
 
         printf("\n");
-
+        if ((diff<1)||(diff>4)) {
+                printf("Input error.\n");
+                sleep(1);
+                goto err1;
+        }
         if (diff == 4) {
                 printf(magenta "Comming soon...\n");
                 printf(reset);
                 exit(1);
 
         }
-        if ((diff<1)||(diff>4)) {
-                printf("Error.\n");
-                sleep(1);
-                goto err1;
-        }
+err2:
         printf (green "Enter maze size:\n");
-        scanf ("%d",&sizze);
+        char inpt[10];
+        sizze=0;
+        scanf("%s",inpt );
+        sizze=0;
+        sizze=atoi(inpt);
+        if (sizze < 1){
+          printf("Input error.\n");
+          sleep(1);
+          system("clear");
+          goto err2;
+        }
         if (!(array=malloc(sizze*sizze*sizeof(Cell)))) {
                 printf("Malloc error 1\n");
                 exit(1);
@@ -230,7 +241,6 @@ err1:
 
 
         int tmp=sizze*sizze;
-        printf("sizze%d\n",tmp );
         for (int i=0; i<tmp; i++) {
                 if (array[i].ply==1) {
                         current=&array[i];
@@ -238,9 +248,6 @@ err1:
                 if (array[i].endd==1) {
                         end_cell=&array[i];
                 }
-                printf("%d\n",i );
-                printf("cur%d\n",current->index );
-                printf("end%d\n",end_cell->index );
         }
 
 

@@ -146,7 +146,6 @@ void Load(Cell *array,int *diff,int *ext_timmer,char PathName[100]){
         fo = fopen(PathName,"rt");
         fscanf( fo, "%d\n",&tmp );
         int sqr=tmp*tmp;
-        printf ("tmp%d\n",tmp);
 
         sqr=tmp*tmp;
         printf("%d\n",sqr );
